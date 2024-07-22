@@ -1,0 +1,15 @@
+# docker compose up -d redis mongodb mysql postgres rabbitmq elasticsearch kibana
+version: '3.9'
+services:  
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=asfandyar
+      - POSTGRES_PASSWORD=api
+      - POSTGRES_DB=golang-practice-project
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./docker-volumes/postgres:/var/lib/postgresql
