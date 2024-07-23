@@ -34,3 +34,21 @@ func (uc *UsersController) Login(ctx *fiber.Ctx) error {
 		"accessToken": accessToken,
 	})
 }
+
+func (uc UsersController) Logout(ctx *fiber.Ctx) error {
+	accessToken := ctx.Get("Token")
+
+	responseErr := uc.userService.Logout(accessToken)
+	if responseErr != nil {
+
+		return ctx.Status(responseErr.Status).JSON(fiber.Map{
+			"message": responseErr,
+			"success": false,
+		})
+	}
+
+	return ctx.Status(fiber.StatusAccepted).JSON(fiber.Map{
+		"message": "Logout Successfully",
+		"success": true,
+	})
+}

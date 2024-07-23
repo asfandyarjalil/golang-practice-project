@@ -62,3 +62,17 @@ func (ur UsersRepository) SetAccessToken(accessToken string, id string) *models.
 
 	return nil
 }
+
+func (ur UsersRepository) RemoveAccessToken(accessToken string) *models.ResponseError {
+	query := `UPDATE users SET access_token = '' WHERE access_token = $1`
+
+	_, err := ur.dbHandler.Exec(query, accessToken)
+	if err != nil {
+		return &models.ResponseError{
+			Message: err.Error(),
+			Status:  http.StatusInternalServerError,
+		}
+	}
+
+	return nil
+}

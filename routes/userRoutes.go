@@ -8,4 +8,5 @@ import (
 
 func UserRoute(app *fiber.App, userController *controllers.UsersController) {
 	app.Post("/login", middleware.ValidateCustomer, userController.Login)
+	app.Get("/logout", userController.Logout)
 }

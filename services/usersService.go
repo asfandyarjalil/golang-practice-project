@@ -40,6 +40,16 @@ func (us UsersService) Login(username string, password string) (string, *models.
 	return accessToken, nil
 
 }
+func (us UsersService) Logout(accessToken string) *models.ResponseError {
+	if accessToken == "" {
+		return &models.ResponseError{
+			Message: "Invalid access token",
+			Status:  http.StatusBadRequest,
+		}
+	}
+
+	return us.usersRepository.RemoveAccessToken(accessToken)
+}
 
 func generateAccessToken(username string) (string, *models.ResponseError) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(username), bcrypt.DefaultCost)
